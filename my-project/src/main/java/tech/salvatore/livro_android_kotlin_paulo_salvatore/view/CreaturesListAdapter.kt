@@ -12,21 +12,20 @@ class CreaturesListAdapter(
     private val items: List<Creature>,
 ) : RecyclerView.Adapter<CreaturesListAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: CreaturesListItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: Creature) {
-            val tvCreatureNumber = itemView.findViewById<TextView>(R.id.tvCreatureNumber)
-            val tvCreatureName = itemView.findViewById<TextView>(R.id.tvCreatureName)
-
-            tvCreatureNumber.text = item.number.toString()
-            tvCreatureName.text = item.name
+            binding.creature = item
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.creatures_list_item, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
 
-        return ViewHolder(view)
+        val binding = CreaturesListItemBinding.inflate(layoutInflater, parent, false)
+
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
